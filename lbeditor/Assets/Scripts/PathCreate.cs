@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.Rendering;
 
 public class PathCreate : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class PathCreate : MonoBehaviour
     public GameObject enemySpawn, basePlayer;
     public Transform posSpawn;
     public GameObject insertParticle;
-
+    public Material transparent;
     public GameObject hordeObject;
     bool enemyReady = false;
     int stateTower = 0;
@@ -54,7 +55,6 @@ public class PathCreate : MonoBehaviour
             {
                 switch(stateTower) {
                     case -1:
-                        //Do nothing. 
                         break;
                     case 0: 
                         if(Input.GetKeyDown(KeyCode.F))
@@ -64,28 +64,16 @@ public class PathCreate : MonoBehaviour
                         }
                         break;
                     case 1:
-                        //Vector3 mousePos = new Vector3();
-                        //mousePos = Input.mousePosition;
-                        //Vector3 point = maincamera.ScreenToWorldPoint(new Vector3(mousePos.x, 0.2f, mousePos.y));
                         RaycastHit hit;
                         Ray ray = maincamera.ScreenPointToRay(Input.mousePosition);
                         if (Physics.Raycast(ray, out hit) && Input.GetKeyDown(KeyCode.F))
                         {
                             Debug.DrawRay(transform.position, transform.TransformDirection(Input.mousePosition) * hit.distance, Color.yellow);
                             towerCopy.transform.position = hit.point;
-                            Debug.Log("Did Hit");
                         }
-
-                        //if (Input.GetMouseButtonDown(0))
-                        //{
-                        //    stateTower = -1;
-                        //    //towerCopy.transform.position = Vector3.Lerp(towerCopy.transform.position, hit.point, Time.deltaTime);
-                        //    tower = true;
-                        //}
                         break;
                 }
-            }
-            
+            }     
         }
         else
         {
@@ -93,6 +81,11 @@ public class PathCreate : MonoBehaviour
             Instantiate(basePlayer, manager.pointList[index], basePlayer.transform.rotation);
             play = false;
             tower = true;
+
+            //GameObject.FindGameObjectWithTag("BasePlane").GetComponent<Renderer>().material = transparent;
+            GameObject.FindGameObjectWithTag("BasePlane").GetComponent<MeshRenderer>().shadowCastingMode = 
+                ShadowCastingMode.ShadowsOnly;
+
             Instantiate(hordeObject, Vector3.zero, hordeObject.transform.rotation);
         }
     }

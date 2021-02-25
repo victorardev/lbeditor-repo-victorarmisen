@@ -185,6 +185,7 @@ MonoBehaviour:
     type: 3}
   posSpawn: {fileID: 593712727}
   insertParticle: {fileID: 120410, guid: 6636b3078b0905e489f698a11b7a6b6b, type: 3}
+  transparent: {fileID: 2100000, guid: ca8210d43066e634e86526c54cedc26b, type: 2}
   hordeObject: {fileID: 2728340536383194171, guid: a9d3886f0355c624493b886304d9bc49,
     type: 3}
   maincamera: {fileID: 53379610}
